@@ -8,7 +8,7 @@ spec:
   source:
     path: knative
     repoURL: https://github.com/lolgab/knative-cluster.git
-    targetRevision: HEAD
+    targetRevision: master
   destination:
     server: https://kubernetes.default.svc
     namespace: knative
