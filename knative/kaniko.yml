@@ -4,18 +4,25 @@ metadata:
   name: kaniko
 spec:
   parameters:
-  - name: IMAGE
-    description: The name of the image to push
-  - name: DOCKERFILE
-    description: Path to the Dockerfile to build.
-    default: /workspace/Dockerfile
+    - name: IMAGE
+      description: The name of the image to push
+    - name: DOCKERFILE
+      description: Path to the Dockerfile to build.
+      default: /workspace/Dockerfile
 
   steps:
-  - name: build-and-push
-    image: gcr.io/kaniko-project/executor
-    args:
-    - --dockerfile=${DOCKERFILE}
-    - --destination=${IMAGE}
-    env:
-    - name: DOCKER_CONFIG
-      value: /builder/home/.docker
+    - name: build-and-push
+      image: gcr.io/kaniko-project/executor
+      args:
+        - --dockerfile=${DOCKERFILE}
+        - --destination=${IMAGE}
+      env:
+        - name: DOCKER_CONFIG
+          value: /builder/home/.docker
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: build-bot
+secrets:
+  - name: docker-user-pass
